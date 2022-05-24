@@ -1,6 +1,6 @@
 ---
 
-- hosts: ec2instance
+- hosts: ec2-instance
 
   become: true
 
