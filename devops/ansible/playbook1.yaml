@@ -1,0 +1,49 @@
+---
+
+- hosts: ec2instance
+
+  become: true
+
+  tasks:
+
+    - name: install python3
+
+      apt: name=python3 update_cache=yes state=latest
+
+
+
+    - name: install python
+
+      apt: name=python update_cache=yes state=latest
+
+
+
+    - name: install java
+
+      apt: name=openjdk-8-jre-headless update_cache=yes state=latest
+
+
+
+    - name: install jenkins apt repository key
+
+      apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
+
+
+
+    - name: configure the repository
+
+      apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
+
+
+
+    - name: install jenkins
+
+      apt: name=jenkins update_cache=yes state=latest
+
+
+
+    - name: ensure jenkins service is running
+
+      service: name=jenkins state=started
+
+
