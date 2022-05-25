@@ -59,7 +59,6 @@
 
   become: true
   become_user: tinakaa
-  become_method: su
 
   tasks:
 
