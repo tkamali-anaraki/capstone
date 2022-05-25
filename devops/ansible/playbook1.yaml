@@ -51,3 +51,7 @@
 
       apt: name=maven update_cache=yes state=latest
 
+    - name: install docker
+
+      apt: name=docker.io update_cache=yes state= latest
+
