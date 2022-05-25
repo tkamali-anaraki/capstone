@@ -1,0 +1,68 @@
+stage ("CI") {
+  stages {
+     stage ("clone") {
+       steps {
+         sh '''
+           echo "cloning spring boot app"
+         '''
+       }
+     }
+
+     stage ("compile") {
+       steps {
+         sh '''
+           echo "compile sourcecode from jenkins workspace"
+         '''
+       }
+     }
+
+     stage ("package") {
+       steps {
+         sh '''
+           echo "to pacakge src code form Jenkins workspace. and get the war file on Jenkins workstation"
+         '''
+       }
+     }
+
+     stage ("DockerFile") {
+       steps {
+         sh '''
+           echo "create docker file with the jar file"
+         '''
+       }
+     }
+
+     stage ("Build") {
+       steps {
+         sh '''
+           echo "build docker image out of docker file"
+         '''
+       }
+     }
+
+     stage ("Push") {
+       steps {
+         sh '''
+            echo "Push docker image to docker hub"
+         '''
+       }
+     }
+  }
+}
+stage ("CD") {
+     stage ("Pull product image") {
+       steps {
+         sh '''
+            echo "workernode pull image from dockerhub"
+         '''
+       }
+     }
+     stage ("Deploy") {
+       steps {
+         sh '''
+            echo "to deploy- docker run- run the container"
+         '''
+       }
+     }
+}
+  
