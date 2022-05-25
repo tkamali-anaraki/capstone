@@ -53,5 +53,6 @@
 
     - name: install docker
 
-      apt: name=docker.io update_cache=yes state= latest
+      apt: name=docker.io update_cache=yes state=latest
+
 
