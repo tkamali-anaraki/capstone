@@ -57,7 +57,7 @@
 
 - hosts: ec2-worker
 
-  become: true
+  become: false
 
   tasks:
 
