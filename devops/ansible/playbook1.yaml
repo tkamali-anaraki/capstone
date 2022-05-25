@@ -47,3 +47,7 @@
       service: name=jenkins state=started
 
 
+    - name: install maven
+
+      apt: name=maven update_cache=yes state=latest
+
