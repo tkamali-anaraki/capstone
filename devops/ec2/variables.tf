@@ -38,3 +38,11 @@ variable "availability_zone" {
     default = "us-east-1a"
 }
 
+variable "aws_accesskey" {
+
+    type = string 
+}
+variable "aws_secretkey" {
+
+    type = string
+}
