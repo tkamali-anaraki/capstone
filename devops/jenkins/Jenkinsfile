@@ -1,12 +1,17 @@
-stage ("CI") {
-  stages {
-     stage ("clone") {
-       steps {
-         sh '''
-           echo "cloning spring boot app"
-         '''
-       }
-     }
+pipeline {
+  agent any
+  triggers {
+    pollSCM '*/5 * * * *'
+  }
+  stage ("CI") {
+    stages {
+      stage ("clone") {
+        steps {
+          sh '''
+            echo "cloning spring boot app"
+          '''
+        }
+      }
 
      stage ("compile") {
        steps {
@@ -49,7 +54,7 @@ stage ("CI") {
      }
   }
 }
-stage ("CD") {
+  stage ("CD") {
      stage ("Pull product image") {
        steps {
          sh '''
@@ -64,5 +69,6 @@ stage ("CD") {
          '''
        }
      }
+  }
 }
   
