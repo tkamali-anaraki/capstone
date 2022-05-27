@@ -18,6 +18,8 @@ pipeline {
        steps {
          sh '''
            echo "compile sourcecode from jenkins workspace"
+           cd gs-spring-boot-docker/complete
+           mvn clean compile
          '''
        }
      }
