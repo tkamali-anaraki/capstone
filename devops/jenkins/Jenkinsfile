@@ -46,11 +46,11 @@ pipeline {
 
      stage ("Build") {
        steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'password-env', usernameVariable: 'username-env')]) {
+        withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')])
          sh '''
            echo "build docker image out of docker file"
-           echo "username-env"
-           echo "password-env"
+           echo "$user-env"
+           echo "$pass-env"
            docker build -t springio/gs-spring-boot-docker .
          '''
        }
