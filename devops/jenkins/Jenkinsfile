@@ -48,6 +48,7 @@ pipeline {
        steps {
          sh '''
            echo "build docker image out of docker file"
+           docker build -t springio/gs-spring-boot-docker .
          '''
        }
      }
