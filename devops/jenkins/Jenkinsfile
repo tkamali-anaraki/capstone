@@ -1,68 +1,66 @@
-stage ("CI") {
+pipeline {
+  agent any
+  triggers {
+    pollSCM '*/5 * * * *'
+  }
   stages {
-     stage ("clone") {
-       steps {
-         sh '''
-           echo "cloning spring boot app"
-         '''
-       }
-     }
-
-     stage ("compile") {
-       steps {
-         sh '''
-           echo "compile sourcecode from jenkins workspace"
-         '''
-       }
-     }
-
-     stage ("package") {
-       steps {
-         sh '''
-           echo "to pacakge src code form Jenkins workspace. and get the war file on Jenkins workstation"
-         '''
-       }
-     }
-
-     stage ("DockerFile") {
-       steps {
-         sh '''
-           echo "create docker file with the jar file"
-         '''
-       }
-     }
-
-     stage ("Build") {
-       steps {
-         sh '''
-           echo "build docker image out of docker file"
-         '''
-       }
-     }
-
-     stage ("Push") {
-       steps {
-         sh '''
-            echo "Push docker image to docker hub"
-         '''
-       }
-     }
+    stage ("CI") {
+      stages {
+        stage ("compile") {
+          steps {
+            sh '''
+              echo "compile sourcecode from jenkins workspace"
+              ./mvnw clean compile
+            '''
+          }
+        }
+        stage ("package") {
+          steps {
+            sh '''
+              echo "to pacakge src code form Jenkins workspace. and get the war file on Jenkins workstation"
+              ./mvnw package
+            '''
+          }
+        }
+        stage ("Build") {
+          steps {
+            withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
+              sh '''
+                echo "build docker image out of docker file"
+                echo "$user-env"
+                echo "$pass-env"
+                docker build -t springio/gs-spring-boot-docker .
+              '''
+            }
+          }
+        }
+        stage ("Push") {
+          steps {
+            sh '''
+              echo "Push docker image to docker hub"
+            '''
+          }
+        }
+      }
+    }
+    stage ("CD") {
+      stages {
+        stage ("Pull product image") {
+          steps {
+            sh '''
+              echo "workernode pull image from dockerhub"
+            '''
+          }
+        }
+        stage ("Deploy") {
+          steps {
+            sh '''
+              echo "to deploy- docker run- run the container"
+              docker run -p 8080:8080 springio/gs-spring-boot-docker
+            '''
+          }
+        }
+      }
+    }
   }
 }
-stage ("CD") {
-     stage ("Pull product image") {
-       steps {
-         sh '''
-            echo "workernode pull image from dockerhub"
-         '''
-       }
-     }
-     stage ("Deploy") {
-       steps {
-         sh '''
-            echo "to deploy- docker run- run the container"
-         '''
-       }
-     }
-}
-  
