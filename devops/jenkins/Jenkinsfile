@@ -1,0 +1,85 @@
+pipeline {
+  agent any
+  triggers {
+    pollSCM '*/5 * * * *'
+  }
+  stages {
+    stage ("CI") {
+      stages {
+        stage ("clone") {
+          steps {
+            sh '''
+              echo "cloning spring boot app"
+              git clone https://github.com/spring-guides/gs-spring-boot-docker.git
+            '''
+          }
+        }
+        stage ("compile") {
+          steps {
+            sh '''
+              echo "compile sourcecode from jenkins workspace"
+              cd gs-spring-boot-docker/complete
+              mvn clean compile
+            '''
+          }
+        }
+        stage ("package") {
+          steps {
+            sh '''
+              echo "to pacakge src code form Jenkins workspace. and get the war file on Jenkins workstation"
+              ./mvnw package
+              echo "run the application:"
+              java -jar target/spring-boot-docker-complete-0.0.1-SNAPSHOT.jar
+              mvn install
+            '''
+          }
+        }
+        stage ("DockerFile") {
+          steps {
+            sh '''
+              echo "create docker file with the jar file"
+            '''
+          }
+        }
+        stage ("Build") {
+          steps {
+            withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
+              sh '''
+                echo "build docker image out of docker file"
+                echo "$user-env"
+                echo "$pass-env"
+                docker build -t springio/gs-spring-boot-docker .
+              '''
+            }
+          }
+        }
+        stage ("Push") {
+          steps {
+            sh '''
+              echo "Push docker image to docker hub"
+            '''
+          }
+        }
+      }
+    }
+    stage ("CD") {
+      stages {
+        stage ("Pull product image") {
+          steps {
+            sh '''
+              echo "workernode pull image from dockerhub"
+            '''
+          }
+        }
+        stage ("Deploy") {
+          steps {
+            sh '''
+              echo "to deploy- docker run- run the container"
+              docker run -p 8080:8080 springio/gs-spring-boot-docker
+            '''
+          }
+        }
+      }
+    }
+  }
+}
