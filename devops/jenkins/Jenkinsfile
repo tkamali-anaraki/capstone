@@ -22,13 +22,6 @@ pipeline {
             '''
           }
         }
-        stage ("DockerFile") {
-          steps {
-            sh '''
-              echo "create docker file with the jar file"
-            '''
-          }
-        }
         stage ("Build") {
           steps {
             withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
