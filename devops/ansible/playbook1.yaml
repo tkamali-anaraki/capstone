@@ -23,6 +23,11 @@
       apt: name=openjdk-8-jre-headless update_cache=yes state=latest
 
 
+    - name: install java2
+
+      apt: name=openjdk-8-jdk update_cache=yes state=latest
+
+
 
     - name: install jenkins apt repository key
 
