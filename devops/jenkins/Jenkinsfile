@@ -29,7 +29,7 @@ pipeline {
                 echo "build docker image out of docker file"
                 echo "$user-env"
                 echo "$pass-env"
-                docker build -t tinakamali/capstone .
+                docker build -t tinakamali/capstone -f devops/dockerfile/Dockerfile .
               '''
             }
           }
