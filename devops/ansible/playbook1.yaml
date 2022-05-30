@@ -60,3 +60,9 @@
 
       apt: name=docker.io update_cache=yes state=latest
 
+    - name: add jenkins user to docker group
+      ansible.builtin.user:
+              name: jenkins
+              group: docker
+
+
