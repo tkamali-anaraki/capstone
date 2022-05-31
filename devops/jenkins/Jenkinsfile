@@ -40,6 +40,8 @@ pipeline {
               sh '''
                 echo "Push docker image to docker hub"
                 docker login -u ${username} -p ${password}
+                docker push ${username}/capstone
+                docker logout
               '''
            }
           }
