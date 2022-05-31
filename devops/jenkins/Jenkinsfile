@@ -24,21 +24,24 @@ pipeline {
         }
         stage ("Build") {
           steps {
-            //withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
+            withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
               sh '''
                 echo "build docker image out of docker file"
                 echo "$user-env"
                 echo "$pass-env"
                 docker build -t tinakamali/capstone -f devops/docker/Dockerfile .
               '''
-            //}
+            }
           }
         }
         stage ("Push") {
           steps {
-            sh '''
-              echo "Push docker image to docker hub"
-            '''
+            withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
+              sh '''
+                echo "Push docker image to docker hub"
+                docker login -u ${user-env} -p ${pass-env}
+              '''
+           }
           }
         }
       }
