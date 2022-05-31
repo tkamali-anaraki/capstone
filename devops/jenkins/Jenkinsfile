@@ -36,10 +36,10 @@ pipeline {
         }
         stage ("Push") {
           steps {
-            withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
+            withCredentials([usernamePassword(credentialsId: 'Dockerhub-Caltech', passwordVariable: 'password', usernameVariable: 'username')]){
               sh '''
                 echo "Push docker image to docker hub"
-                docker login -u ${user-env} -p ${pass-env}
+                docker login -u ${username} -p ${password}
               '''
            }
           }
