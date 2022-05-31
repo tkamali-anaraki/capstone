@@ -64,5 +64,6 @@
       ansible.builtin.user:
               name: jenkins
               group: docker
+              append: yes
 
 
