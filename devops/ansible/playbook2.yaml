@@ -1,0 +1,45 @@
+---
+
+- hosts: ec2-worker
+
+  become: true
+
+  tasks:
+
+    - name: install python3
+
+      apt: name=python3 update_cache=yes state=latest
+
+
+
+    - name: install python
+
+      apt: name=python update_cache=yes state=latest
+
+
+
+    - name: install java
+
+      apt: name=openjdk-8-jre-headless update_cache=yes state=latest
+
+
+    - name: install java2
+
+      apt: name=openjdk-8-jdk update_cache=yes state=latest
+
+
+    - name: install maven
+
+      apt: name=maven update_cache=yes state=latest
+
+    - name: install docker
+
+      apt: name=docker.io update_cache=yes state=latest
+
+    - name: add jenkins user to docker group
+      ansible.builtin.user:
+              name: jenkins
+              groups: docker
+              append: yes
+
+
