@@ -1,6 +1,8 @@
 pipeline {
   //agent any
-  agent Jenkins-Slave1
+  agent {
+    label 'agent1'
+  }
   triggers {
     pollSCM '*/5 * * * *'
   }
