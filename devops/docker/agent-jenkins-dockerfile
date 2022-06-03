@@ -1,4 +1,4 @@
-FROM ssh-agent:latest
+FROM jenkins/ssh-agent:latest
 RUN apt-get -y update
 RUN apt-get install -y docker.io
 WORKDIR "${JENKINS_AGENT_HOME}"
