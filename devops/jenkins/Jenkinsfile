@@ -80,7 +80,7 @@ pipeline {
         post {
           always {
             echo 'Remove the container stack after completing the job, stoping the container will remove it too because of --rm"
-            docker stop slave1
+           // docker stop slave1
           }
         }
       }
