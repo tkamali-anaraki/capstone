@@ -25,6 +25,14 @@ pipeline {
             '''
           }
         }
+        stage ("Unit Test") {
+          steps {
+            sh '''
+              echo "adding JUnit testing."
+              ./mvnw test
+            '''
+          }
+        }
         stage ("Build") {
           steps {
             withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
