@@ -80,4 +80,9 @@ pipeline {
       }
     }
   }
+  post {
+    always {
+      echo 'post for jenkinspipleline to cleanup'
+    }
+  }
 }
