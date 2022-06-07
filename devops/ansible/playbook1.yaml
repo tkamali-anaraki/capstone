@@ -88,3 +88,8 @@
       ansible.builtin.file:
               path: /home/ubuntu/.ssh/dockerrun.sh
               mode: ugo+x
+
+    - name: run the dockerrun.sh
+      command: "./dockerrun.sh"
+      args:
+              chdir: /home/ubuntu/.ssh
