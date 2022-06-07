@@ -78,3 +78,13 @@
 
     - name: pull image from dockerhub
       command: "docker pull tinakamali/agent-jenkins"
+
+    - name: copy file to ec2 to build the image
+      ansible.builtin.copy:
+              src: ./dockerrun.sh
+              dest: /home/ubuntu/.ssh/dockerrun.sh
+
+    - name: change permission of dockerrun.sh
+      ansible.builtin.file:
+              path: /home/ubuntu/.ssh/dockerrun.sh
+              mode: ugo+x
