@@ -69,7 +69,6 @@
     - name: generate open ssh key pair
       community.crypto.openssh_keypair:
               path: /home/ubuntu/.ssh/jenkins_agent_key
-              force: True
 
     - name: change permission for docker.sock
       ansible.builtin.file:
@@ -82,7 +81,7 @@
       apt: name=python-docker  update_cache=yes state=latest
 
     - name: pull image from dockerhub
-      command: "docker pull tinakamali/agent-jenkins"
+      command: "docker pull tinakamali/agent-jenkins:curl"
 
     - name: copy file to ec2 to build the image
       ansible.builtin.copy:
