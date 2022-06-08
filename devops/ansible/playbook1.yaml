@@ -69,7 +69,6 @@
     - name: generate open ssh key pair
       community.crypto.openssh_keypair:
               path: /home/ubuntu/.ssh/jenkins_agent_key
-              force: True
 
     - name: change permission for docker.sock
       ansible.builtin.file:
