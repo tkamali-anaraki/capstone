@@ -83,6 +83,7 @@ pipeline {
   post {
     always {
       echo 'post for jenkinspipleline to cleanup'
+      docker stop tina-app-capstone
     }
   }
 }
