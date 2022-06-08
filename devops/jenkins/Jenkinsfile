@@ -82,7 +82,6 @@ pipeline {
             sh '''
               echo "show the output after deploying the container-before removing the container stack"
               echo "$(curl ip-10-0-1-222:8081)"
-              echo "SUCSSES for app deployment"
             '''
           }
         }
