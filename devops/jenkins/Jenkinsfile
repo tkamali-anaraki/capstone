@@ -80,7 +80,7 @@ pipeline {
         stage ("Success-Curl") {
           steps {
             sh '''
-              echo "$(curl localhost:8081)"
+              echo "$(curl ip-10-0-1-222:8081)"
             '''
           }
         }
