@@ -25,6 +25,14 @@ pipeline {
             '''
           }
         }
+        stage ("Unit Test") {
+          steps {
+            sh '''
+              echo "adding JUnit testing."
+              ./mvnw test
+            '''
+          }
+        }
         stage ("Build") {
           steps {
             withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
@@ -65,11 +73,16 @@ pipeline {
           steps {
             sh '''
               echo "to deploy- docker run- run the container"
-              docker run -p 8081:8081 tinakamali/capstone &
+              docker run -p 8081:8081 --rm --name=tina-app-capstone tinakamali/capstone &
             '''
           }
         }
       }
+    }
+  }
+  post {
+    always {
+      echo 'post for jenkinspipleline to cleanup'
     }
   }
 }
