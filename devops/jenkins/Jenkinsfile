@@ -77,6 +77,13 @@ pipeline {
             '''
           }
         }
+        stage ("Success-Curl") {
+          steps {
+            sh '''
+              echo "$(curl localhost:8081)"
+            '''
+          }
+        }
       }
     }
   }
