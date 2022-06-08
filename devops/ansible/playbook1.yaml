@@ -66,6 +66,11 @@
               groups: docker
               append: yes
 
+    - name: generate open ssh key pair
+      community.crypto.openssh_keypair:
+              path: /home/ubuntu/.ssh/jenkins_agent_key
+              force: True
+
     - name: change permission for docker.sock
       ansible.builtin.file:
               path: /var/run/docker.sock
@@ -93,3 +98,4 @@
       command: "./dockerrun.sh"
       args:
               chdir: /home/ubuntu/.ssh
+
