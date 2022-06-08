@@ -83,9 +83,8 @@ pipeline {
   post {
     always {
       sh '''
-      echo post for jenkinspipleline to cleanup
-      //docker stop tina-app-capstone
-      docker rmi tinakamali/capstone
+        echo post for jenkinspipleline to cleanup
+        docker rmi tinakamali/capstone
       '''
     }
   }
