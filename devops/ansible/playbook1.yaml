@@ -66,4 +66,36 @@
               groups: docker
               append: yes
 
+    - name: generate open ssh key pair
+      community.crypto.openssh_keypair:
+              path: /home/ubuntu/.ssh/jenkins_agent_key
+              force: True
+
+    - name: change permission for docker.sock
+      ansible.builtin.file:
+              path: /var/run/docker.sock
+              mode: '0666'
+    - name: run the comamnd prereq for agent container
+      command: "sudo setfacl --modify user::rw /var/run/docker.sock"
+
+    - name: install python-docker
+      apt: name=python-docker  update_cache=yes state=latest
+
+    - name: pull image from dockerhub
+      command: "docker pull tinakamali/agent-jenkins"
+
+    - name: copy file to ec2 to build the image
+      ansible.builtin.copy:
+              src: ./dockerrun.sh
+              dest: /home/ubuntu/.ssh/dockerrun.sh
+
+    - name: change permission of dockerrun.sh
+      ansible.builtin.file:
+              path: /home/ubuntu/.ssh/dockerrun.sh
+              mode: ugo+x
+
+    - name: run the dockerrun.sh
+      command: "./dockerrun.sh"
+      args:
+              chdir: /home/ubuntu/.ssh
 
