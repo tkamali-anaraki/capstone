@@ -80,6 +80,7 @@ pipeline {
         stage ("Success-Curl") {
           steps {
             sh '''
+              echo "show the output after deploying the container-before removing the container stack"
               echo "$(curl ip-10-0-1-222:8081)"
             '''
           }
@@ -89,7 +90,10 @@ pipeline {
   }
   post {
     always {
-        echo 'post for jenkinspipleline to cleanup'
+      sh '''
+        echo "post for jenkinspipleline to cleanup, and remove the container after we see the result"
+        docker stop tina-app-capstone
+      '''
     }
   }
 }
