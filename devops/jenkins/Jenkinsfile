@@ -92,9 +92,9 @@ pipeline {
   post {
     always {
       sh '''
-        #echo "post for jenkinspipleline to cleanup, and remove the container after we see the result"
-        #docker stop tina-app-capstone
-        #echo "SUCCESS - App ran and container gor removed"
+        echo "post for jenkinspipleline to cleanup, and remove the container after we see the result"
+        docker stop tina-app-capstone
+        echo "SUCCESS - App ran and container gor removed"
       '''
     }
   }
