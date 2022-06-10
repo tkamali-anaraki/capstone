@@ -1,10 +1,10 @@
 The focus of this project is CI/CD pipeline and using automation tools.
 The tools I used are as follow:
-AWS - EC2 instance and related resources to that
-Terraform
-Ansible
-Jenkins – Master and Slave architecture
-Docker & Docker containers
+AWS - EC2 instance and related resources to that,
+Terraform,
+Ansible,
+Jenkins – Master and Slave architecture,
+Docker & Docker containers,
 Git and GitHub
 
 ----------------------------------------------------------------------
