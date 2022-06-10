@@ -81,7 +81,7 @@ pipeline {
           steps {
             sh '''
               echo "show the output after deploying the container-before removing the container stack"
-              curl ip-10-0-1-222:8081
+              curl localhost:8081
             '''
           }
         }
