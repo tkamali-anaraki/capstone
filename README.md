@@ -21,6 +21,5 @@ In my jenkins, I'm using master salve architecture, which my master runnung on a
 
 test 1234
 test 5555
-test 6666
 test 7777
 test 8888
