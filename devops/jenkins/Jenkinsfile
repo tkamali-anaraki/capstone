@@ -96,7 +96,6 @@ pipeline {
         docker stop tina-app-capstone
         docker rmi tinakamali/capstone
         echo "Removing dangling images:"
-        //docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
         echo "SUCCESS - App ran and container got removed"
       '''
     }
