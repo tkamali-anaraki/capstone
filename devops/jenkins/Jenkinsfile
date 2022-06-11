@@ -11,9 +11,9 @@ pipeline {
   }
   triggers {
     /*
-     * This scope defines trigger for POLLSCM so jenkins poll the SCM automatically every 5 minutes.
+     * The pipeline is triggered via webhook.
      */
-    pollSCM '*/5 * * * *'
+    githubPush()
   }
   stages {
     /*
