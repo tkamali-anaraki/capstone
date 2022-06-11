@@ -94,7 +94,8 @@ pipeline {
       sh '''
         echo "post for jenkinspipleline to cleanup, and remove the container after we see the result"
         docker stop tina-app-capstone
-        echo "SUCCESS - App ran and container gor removed"
+        docker rmi tinakamali/capstone
+        echo "SUCCESS - App ran and container got removed"
       '''
     }
   }
