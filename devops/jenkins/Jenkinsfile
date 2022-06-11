@@ -13,7 +13,7 @@ pipeline {
     /*
      * This scope defines trigger for POLLSCM so jenkins poll the SCM automatically every 5 minutes.
      */
-    pollSCM '*/5 * * * *'
+   // pollSCM '*/5 * * * *'
   }
   stages {
     /*
