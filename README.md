@@ -18,3 +18,5 @@ In CD stage, which is continuous deployment, my focus is on deploying the applic
 In “CD” stage I have pull, Deploy, and success curl stages. In Pull stage, I pull the image I created in CI stage from dockerhub, and in deploy stage, I run the container out of that docker image, and the application is running. In Success Curl stage, I check the output of my application. I also added Declarative post actions to my Jenkins pipeline script. Which stop and remove the app container I deployed.
 
 In my jenkins, I'm using master salve architecture, which my master runnung on an aws ec2 iunstace and my slave running on a slave container. I build my job and deploy my application in slave node in jenkins.
+
+test 123
