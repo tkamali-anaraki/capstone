@@ -95,7 +95,6 @@ pipeline {
         echo "post for jenkinspipleline to cleanup, and remove the container after we see the result"
         docker stop tina-app-capstone
         docker rmi tinakamali/capstone
-        echo "Removing dangling images:"
         echo "SUCCESS - App ran and container got removed"
       '''
     }
