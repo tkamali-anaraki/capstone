@@ -1,16 +1,40 @@
 pipeline {
+  /*
+   * This scope defines entire pipeline.
+   */
   //agent any
   agent {
+    /*
+     * This scope defines agent. specifies to use agent with node label agent1, instead of master.
+     */  
     label 'agent1'
   }
   triggers {
+    /*
+     * This scope defines trigger for POLLSCM so jenkins poll the SCM automatically every 5 minutes.
+     */
     pollSCM '*/5 * * * *'
   }
   stages {
+    /*
+     * This scope defines stages which include CI and CD.
+     */
     stage ("CI") {
+      /*
+       * This scope defines stage CI which include stages.
+       */
       stages {
+        /*
+         * This scope defines stages which include compile, package, Unit Test, Build, and Push stages.
+         */
         stage ("compile") {
+          /*
+           * This scope defines compile stage to compile source code from jenkins workspace.
+           */
           steps {
+            /*
+             * This scope defines the steps and comamnd for compile stage.
+             */
             sh '''
               echo "compile sourcecode from jenkins workspace"
               ./mvnw clean compile
@@ -18,7 +42,13 @@ pipeline {
           }
         }
         stage ("package") {
+          /*
+           * This scope defines package stage to package the source code and get the war file.
+           */
           steps {
+            /*
+             * This scope defines steps for packaging the source code and its comamnd.
+             */
             sh '''
               echo "to pacakge src code form Jenkins workspace. and get the war file on Jenkins workstation"
               ./mvnw package
@@ -26,7 +56,13 @@ pipeline {
           }
         }
         stage ("Unit Test") {
+          /*
+           * This step defines JUnit testing for the application.
+           */
           steps {
+            /*
+             * This scope defines step for unit testing stage and its comamnd.
+             */
             sh '''
               echo "adding JUnit testing."
               ./mvnw test
@@ -34,7 +70,13 @@ pipeline {
           }
         }
         stage ("Build") {
+          /*
+           * This scope defines Build satge to build docker image.
+           */
           steps {
+            /*
+             * This scope defines withcredentials for dockerhub so jenkins can talk and communiacte with dockerhub, and the commands for build stage to build the docker image.
+             */
             withCredentials([usernamePassword(credentialsId: 'Dockerhub-System', passwordVariable: 'pass-env', usernameVariable: 'user-env')]){
               sh '''
                 echo "build docker image out of docker file"
@@ -46,7 +88,13 @@ pipeline {
           }
         }
         stage ("Push") {
+          /*
+           * This scope defines push satge to push teh image got builkt in previoyus stage, to the dockerhub.
+           */
           steps {
+            /*
+             * This scope defines withcredentials so jenkins can communicate with dockerhub and can login to dockerhub, and steps to push the iamge to dockerhub and logout from dockerhub.
+             */
             withCredentials([usernamePassword(credentialsId: 'Dockerhub-Caltech', passwordVariable: 'password', usernameVariable: 'username')]){
               sh '''
                 echo "Push docker image to docker hub"
@@ -60,9 +108,21 @@ pipeline {
       }
     }
     stage ("CD") {
+      /*
+       * This scope defines CD stage which include stages.
+       */
       stages {
+        /*
+         * This scope defines stages in CD, which include pull product image, Deploy,a nd success-Curl.
+         */
         stage ("Pull product image") {
+          /*
+           * This scope defines satge pull, to pull docker image from dockerhub.
+           */
           steps {
+            /*
+             * This scope defines steps for pull satge and command to pull image from dockerhub.
+             */
               sh '''
                 echo "workernode pull image from dockerhub"
                 docker pull tinakamali/capstone
@@ -70,7 +130,13 @@ pipeline {
           }
         }
         stage ("Deploy") {
+          /*
+           * This scope defines stage deploy, to deploy the application.
+           */
           steps {
+            /*
+             * This scope defines steps for deploy stage which is comamd for running a container out of image pulled from previous stage.
+             */
             sh '''
               echo "to deploy- docker run- run the container"
               docker run -p 8081:8081 --rm --detach --name=tina-app-capstone tinakamali/capstone
@@ -78,7 +144,13 @@ pipeline {
           }
         }
         stage ("Success-Curl") {
+          /*
+           * This scope defines success-curl stage to show the output of application.
+           */
           steps {
+            /*
+             * This scope defines steps for stage success-curl, to sleeps for 10 seconds so contaier runs, and gets the output of application which is curl here.
+             */
             sh '''
               echo "show the output after deploying the container-before removing the container stack"
               sleep 10
@@ -90,7 +162,13 @@ pipeline {
     }
   }
   post {
+    /*
+     * Thiss scope shows post declerative actions after stages are done.
+     */
     always {
+      /*
+       * Thsis cope runs the comamnds/steps in the post section regardless of completion status of pipeline or stage's run.Here I'm removing container application, and images after completing the job.
+       */
       sh '''
         echo "post for jenkinspipleline to cleanup, and remove the container and images after we see the result"
         docker stop tina-app-capstone
