@@ -20,3 +20,4 @@ In “CD” stage I have pull, Deploy, and success curl stages. In Pull stage, I
 In my jenkins, I'm using master salve architecture, which my master runnung on an aws ec2 iunstace and my slave running on a slave container. I build my job and deploy my application in slave node in jenkins.
 
 test 1234
+test 5555
