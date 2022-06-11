@@ -9,12 +9,12 @@ pipeline {
      */  
     label 'agent1'
   }
-  triggers {
-    /*
-     * This scope defines trigger for POLLSCM so jenkins poll the SCM automatically every 5 minutes.
-     */
-   // pollSCM '*/5 * * * *'
-  }
+//  triggers {
+//    /*
+//     * This scope defines trigger for POLLSCM so jenkins poll the SCM automatically every 5 minutes.
+//     */
+//   // pollSCM '*/5 * * * *'
+//  }
   stages {
     /*
      * This scope defines stages which include CI and CD.
