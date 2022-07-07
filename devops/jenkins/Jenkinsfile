@@ -154,7 +154,7 @@ pipeline {
             sh '''
               echo "show the output after deploying the container-before removing the container stack"
               sleep 10
-              curl ip-10-0-1-222:8081
+              curl ip-10-0-1-84:8081
             '''
           }
         }
